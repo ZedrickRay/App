@@ -1,0 +1,300 @@
+WindowManager:
+    MainWindow:
+    FilipinoWindow:
+    EnglishWindow:
+    HandSigns:
+    HandSign:
+    InstructionsWindow:
+    InstructionsWindow1:
+
+<MainWindow>:
+    name: "main"
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 15
+        padding: 20
+
+        Label:
+            text: "Choose Language"
+            font_size: 32
+            size_hint_y: None
+            height: 100
+
+        Button:
+            text: "Filipino"
+            size_hint_y: None
+            height: 60
+            on_press: root.manager.current = "filipino"
+
+        Button:
+            text: "English"
+            size_hint_y: None
+            height: 60
+            on_press: root.manager.current = "english"
+
+<FilipinoWindow>:
+    name: "filipino"
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 10
+        padding: 20
+
+        Label:
+            text: "Filipino Mode"
+            font_size: 24
+
+        Label:
+            text: "Instructions: Press 'Open Camera' to start the camera feed. You can also upload a photo."
+            size_hint_y: None
+            height: 50
+            font_size: 16
+
+        Button:
+            text: "Buksan Ang Camera"
+            size_hint_y: None
+            height: 60
+            on_press: root.manager.current = "handsigns"
+
+        Button:
+            text: "Ipakita ang Instructions"
+            size_hint_y: None
+            height: 60
+            on_press: root.manager.current = "instructions"
+
+        Button:
+            text: "Bumalik"
+            size_hint_y: None
+            height: 50
+            on_press: root.manager.current = "main"
+
+<EnglishWindow>:
+    name: "english"
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 10
+        padding: 20
+
+        Label:
+            text: "English Mode"
+            font_size: 24
+
+        Label:
+            text: "Instructions: Press 'Open Camera' to start the camera feed. You can also upload a photo."
+            size_hint_y: None
+            height: 50
+            font_size: 16
+
+        Button:
+            text: "Open Camera"
+            size_hint_y: None
+            height: 60
+            on_press: root.manager.current = "handsign"
+
+        Button:
+            text: "Show Instructions"
+            size_hint_y: None
+            height: 60
+            on_press: root.manager.current = "instructions1"
+
+        Button:
+            text: "Back"
+            size_hint_y: None
+            height: 50
+            on_press: root.manager.current = "main"
+
+<HandSigns>:
+    name: "handsigns"
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 10
+        padding: 10
+
+        Image:
+            id: cam_view
+            allow_stretch: True
+            keep_ratio: True
+            size_hint_y: 0.6
+
+        Label:
+            id: text_output
+            text: "Detected: "
+            font_size: 20
+            size_hint_y: None
+            height: 30
+
+        Label:
+            id: sentence_output
+            text: "Sentence: "
+            font_size: 20
+            size_hint_y: None
+            height: 30
+
+        TextInput:
+            id: editable_text
+            text: "Sentence: "
+            multiline: True
+            font_size: 18
+            size_hint_y: 0.2
+            hint_text: "You can type or edit the sentence here..."
+            foreground_color: 0, 0, 0, 1
+            background_color: 1, 1, 1, 1
+
+        Button:
+            text: "Sabihin ang Salita"
+            size_hint_y: None
+            height: 50
+            on_press: root.speak_full_text()
+
+        Button:
+            text: "Ibura ang Salita"
+            size_hint_y: None
+            height: 40
+            on_release: root.clear_text()
+
+        Button:
+            text: "Magupload ng Litrato"
+            size_hint_y: None
+            height: 50
+            on_press: root.upload_photo()
+
+        Button:
+            text: "Bumalik"
+            size_hint_y: None
+            height: 50
+            on_press: root.manager.current = "filipino"
+
+<HandSign>:
+    name: "handsign"
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 10
+        padding: 10
+
+        Label:
+            text: "Live Camera Feed"
+            font_size: 20
+            size_hint_y: None
+            height: 40
+
+        Image:
+            id: cam_view
+            allow_stretch: True
+            keep_ratio: True
+            size_hint_y: 0.85
+
+
+        Label:
+            id: text_output
+            text: "Detected: "
+            font_size: 20
+            size_hint_y: None
+            height: 30
+
+        Label:
+            id: sentence_output
+            text: "Sentence: "
+            font_size: 20
+            size_hint_y: None
+            height: 30
+
+        TextInput:
+            id: editable_text
+            text: "Sentence: "
+            multiline: True
+            font_size: 18
+            size_hint_y: 0.2
+            hint_text: "You can type or edit the sentence here..."
+            foreground_color: 0, 0, 0, 1
+            background_color: 1, 1, 1, 1
+
+        Button:
+            text: "Speak Text"
+            size_hint_y: None
+            height: 50
+            on_press: root.speak_full_text()
+
+        Button:
+            text: "Erase Text"
+            size_hint_y: None
+            height: 40
+            on_release: root.clear_text()
+
+        Button:
+            text: "Upload Photo"
+            size_hint_y: None
+            height: 50
+            on_press: root.upload_photo()
+
+        Button:
+            text: "Back"
+            size_hint_y: None
+            height: 50
+            on_press: root.manager.current = "english"
+
+<InstructionsWindow>:
+    name: "instructions"
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 10
+        padding: 20
+
+        Label:
+            text: "Sign Language Instructions"
+            font_size: 24
+            size_hint_y: None
+            height: 50
+
+        Label:
+            id: instructions_label
+            text: "Here are the letters of the sign language alphabet."
+            size_hint_y: None
+            height: 50
+            font_size: 16
+
+        Image:
+            id: alphabet_image
+            source: 'c:/Images/sig.png'
+            size_hint_y: None
+            height: 650
+            allow_stretch: True
+            keep_ratio: True
+
+        Button:
+            text: "Bumalik"
+            size_hint_y: None
+            height: 50
+            on_press: root.manager.current = "filipino"
+
+<InstructionsWindow1>:
+    name: "instructions1"
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 10
+        padding: 20
+
+        Label:
+            text: "Sign Language Instructions"
+            font_size: 24
+            size_hint_y: None
+            height: 50
+
+        Label:
+            id: instructions_label
+            text: "Here are the letters of the sign language alphabet."
+            size_hint_y: None
+            height: 50
+            font_size: 16
+
+        Image:
+            id: alphabet_image
+            source: 'c:/Images/sig.png'
+            size_hint_y: None
+            height: 650
+            allow_stretch: True
+            keep_ratio: True
+
+        Button:
+            text: "Back"
+            size_hint_y: None
+            height: 50
+            on_press: root.manager.current = "english"
