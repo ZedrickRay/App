@@ -15,7 +15,7 @@ Window.size = (380, 650)
 Window.clearcolor = (1, 1, 1, 1)
 
 # import camera helpers from appfunction
-from appfunction import start_camera, stop_camera, camera_update, save_uploaded_image, CAMERA_ORIENTATION
+from appfunction import start_camera, stop_camera, camera_update, save_uploaded_image, CAMERA_ORIENTATION, start_tflite, stop_tflite
 
 # Main screen where user chooses language
 class MainWindow(Screen):
@@ -32,6 +32,13 @@ class EnglishWindow(Screen):
 # HandSigns screen (for camera feed)
 class HandSigns(Screen):
     def on_enter(self):
+        # Prefer the TFLite model if available (uses Assets/best_float32.tflite)
+        try:
+            ok = start_tflite(self, model_path="Assets/best_float32.tflite")
+            if ok:
+                return
+        except Exception:
+            pass
         start_camera(self, src=0, interval=1.0/30.0)
 
     def update(self, dt):
@@ -39,6 +46,10 @@ class HandSigns(Screen):
         camera_update(self, dt)
 
     def on_leave(self):
+        try:
+            stop_tflite(self)
+        except Exception:
+            pass
         stop_camera(self)
 
     def upload_photo(self):
@@ -59,12 +70,22 @@ class HandSigns(Screen):
 # HandSign screen (SECOND CAMERA)
 class HandSign(Screen):
     def on_enter(self):
+        try:
+            ok = start_tflite(self, model_path="Assets/best_float32.tflite")
+            if ok:
+                return
+        except Exception:
+            pass
         start_camera(self, src=0, interval=1.0/30.0)
 
     def update(self, dt):
         camera_update(self, dt)
 
     def on_leave(self):
+        try:
+            stop_tflite(self)
+        except Exception:
+            pass
         stop_camera(self)
 
     def upload_photo(self):
